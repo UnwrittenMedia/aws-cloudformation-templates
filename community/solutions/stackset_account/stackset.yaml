@@ -1,1 +1,47 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    - Label:
+        default: Settings
+      Parameters:
+      - AdminAccountId
+      - CreateAdminRoles
+
+Parameters:
+  CreateAdminRoles:
+    Type: String
+    Default: "Yes, admin account"
+    AllowedValues:
+    - "Yes, admin account"
+    - "No, target only"
+    Description: "Create the roles needed for administration of stack sets"
+  AdminAccountId:
+    Type: String
+    Default: ""
+    Description: "Account ID of the master. Leave blank for this account"
+
+Conditions:
+  createAdminRole:
+    {"Fn::Equals": [!Ref "CreateAdminRoles", "Yes, admin account"] }
+  selfAdminAccount:
+    {"Fn::Equals": [!Ref "AdminAccountId", ""] }
+
+Resources:
+  adminRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument:
+        JSON object
+      ManagedPolicyArns:
+        - String
+      Path: String
+      Policies:
+        - Policies
+      RoleName: String
+
+
+
+
 
